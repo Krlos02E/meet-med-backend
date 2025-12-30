@@ -15,6 +15,15 @@ Se utiliza un modelo relacional en **PostgreSQL** con las siguientes entidades p
 - **Availability**: Relación 1:N con `MedicalService`, permitiendo definir múltiples franjas horarias para un mismo servicio.
 El sistema utiliza **Soft Deletes** para mantener la integridad histórica de los datos.
 
+### Estructura del Proyecto
+- `src/modules`: Contiene la lógica de negocio organizada por dominios (Auth, Users, Medical Services). Cada módulo sigue esta estructura interna:
+  - `controllers/`: Puntos de entrada de la API y manejo de respuestas HTTP.
+  - `services/`: Lógica de negocio y orquestación de transacciones.
+  - `repositories/`: Capa de persistencia utilizando TypeORM.
+  - `entities/`: Definición de modelos de base de datos.
+  - `dto/`: Objetos de transferencia de datos para entrada y salida.
+- `src/common`: Decoradores, filtros de excepciones, guards de seguridad y configuración del logger.
+
 ### Estrategia de Autenticación y Justificación
 Se ha implementado una estrategia de autenticación basada en **JWT (JSON Web Tokens)** con una capa de seguridad adicional:
 - **Almacenamiento en Cookies HTTP-Only**: Se uso cookies con el flag `httpOnly` para el sesionamiento para garantizar que el token sea inaccesible para scripts de JavaScript en el cliente. Esto proporciona una defensa robusta contra ataques de **XSS (Cross-Site Scripting)**.
@@ -32,7 +41,7 @@ Se ha implementado una estrategia de autenticación basada en **JWT (JSON Web To
 
 ## Configuración
 1. Clona el repositorio.
-2. Crea un archivo `.env` en la raíz basado en el siguiente ejemplo:
+2. Crea un archivo `.env` en la raíz basado en el .env.ejemplo:
 ```env
 PORT=3000
 DB_HOST=localhost
@@ -41,7 +50,6 @@ DB_USERNAME=postgres
 DB_PASSWORD=postgres
 DB_DATABASE=meetmed
 JWT_SECRET=tu_secreto_super_seguro
-JWT_EXPIRATION=1h
 COOKIE_SECRET=secreto_para_cookies
 NODE_ENV=development
 ```
@@ -73,12 +81,3 @@ El proyecto incluye pruebas de integración (E2E) que cubren el flujo de autenti
 # Ejecutar pruebas E2E
 npm run test:e2e
 ```
-
-## Estructura del Proyecto
-- `src/modules`: Contiene la lógica de negocio organizada por dominios (Auth, Users, Medical Services). Cada módulo sigue esta estructura interna:
-  - `controllers/`: Puntos de entrada de la API y manejo de respuestas HTTP.
-  - `services/`: Lógica de negocio y orquestación de transacciones.
-  - `repositories/`: Capa de persistencia utilizando TypeORM.
-  - `entities/`: Definición de modelos de base de datos.
-  - `dto/`: Objetos de transferencia de datos para entrada y salida.
-- `src/common`: Decoradores, filtros de excepciones, guards de seguridad y configuración del logger.
