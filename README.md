@@ -3,7 +3,7 @@
 ## Descripción del Proyecto
 
 ### Arquitectura
-El proyecto implementa una **Arquitectura de Capas Estricta** (Strict Layered Architecture) inspirada en patrones de diseño empresariales como los utilizados en Spring Boot. La estructura se divide en:
+El proyecto implementa una **Arquitectura en Capas**. La estructura se divide en:
 - **Controladores (Controllers)**: Manejan las peticiones HTTP y la validación de entrada.
 - **Servicios (Services)**: Contienen la lógica de negocio y orquestan las transacciones.
 - **Repositorios (Repositories)**: Capa de abstracción de datos personalizada que encapsula el uso de TypeORM. Los servicios nunca acceden directamente al `EntityManager` o al repositorio base de TypeORM, lo que facilita el mantenimiento y las pruebas unitarias.
